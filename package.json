@@ -1,0 +1,30 @@
+{
+  "name": "zent-backend",
+  "version": "1.0.0",
+  "description": "Centralized Academic Resource Platform - Server-side API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-mongo": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^17.4.1",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "express-validator": "^7.0.1",
+    "mongoose": "^8.0.3",
+    "multer": "^1.4.4",
+    "multer-gridfs-storage": "^5.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "authors": [
+    "Timothy Sisa",
+    "Alazar Kidane",
+    "Adarsh Pandit"
+  ]
+}
