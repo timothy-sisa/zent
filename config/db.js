@@ -1,5 +1,4 @@
-// config/db.js
-// Author: Timothy Sisa, Alazar Kidane, Adarsh Pandit
+// Author: Timothy Sisa
 // Handles the MongoDB connection using Mongoose.
 
 const mongoose = require("mongoose");
