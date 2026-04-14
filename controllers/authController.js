@@ -3,6 +3,7 @@
 
 const { validationResult } = require("express-validator");
 const User = require("../models/User");
+const crypto = require("crypto");
 
 // Creates a new user account, starts a session, and sets the role cookie.
 const register = async (req, res) => {
@@ -103,4 +104,47 @@ const getMe = async (req, res) => {
   }
 };
 
-module.exports = { register, login, logout, getMe };
+
+// POST /api/auth/forgot-password
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: "No account with that email." });
+    }
+    const token = crypto.randomBytes(20).toString("hex");
+    user.resetPasswordToken = token;
+    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+    await user.save();
+    // For assignment: return token in response (normally, send by email)
+    return res.status(200).json({ message: "Password reset token generated.", token });
+  } catch (err) {
+    console.error("forgotPassword error:", err.message);
+    res.status(500).json({ error: "Server error." });
+  }
+};
+
+// POST /api/auth/reset-password
+const resetPassword = async (req, res) => {
+  const { token, newPassword } = req.body;
+  try {
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+    if (!user) {
+      return res.status(400).json({ error: "Invalid or expired token." });
+    }
+    user.password = newPassword;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+    return res.status(200).json({ message: "Password has been reset." });
+  } catch (err) {
+    console.error("resetPassword error:", err.message);
+    res.status(500).json({ error: "Server error." });
+  }
+};
+
+module.exports = { register, login, logout, getMe, forgotPassword, resetPassword };

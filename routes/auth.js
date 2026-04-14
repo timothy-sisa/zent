@@ -5,7 +5,7 @@
 const express = require("express");
 const router = express.Router();
 const { body } = require("express-validator");
-const { register, login, logout, getMe } = require("../controllers/authController");
+const { register, login, logout, getMe, forgotPassword, resetPassword } = require("../controllers/authController");
 const { requireAuth } = require("../middleware/auth");
 
 //  Validation chains 
@@ -57,5 +57,22 @@ router.post("/logout", requireAuth, logout);
 
 // GET /api/auth/me — returns the current user's profile
 router.get("/me", requireAuth, getMe);
+
+// POST /api/auth/forgot-password
+router.post(
+  "/forgot-password",
+  [emailValidation],
+  forgotPassword
+);
+
+// POST /api/auth/reset-password
+router.post(
+  "/reset-password",
+  [
+    body("token").notEmpty().withMessage("Token is required."),
+    body("newPassword").isLength({ min: 6 }).withMessage("Password must be at least 6 characters.")
+  ],
+  resetPassword
+);
 
 module.exports = router;

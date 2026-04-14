@@ -42,6 +42,10 @@ const userSchema = new mongoose.Schema(
 
     // Stores references to resources the user has saved as favourites.
     favourites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Resource" }],
+
+    // For password reset
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
   },
   { timestamps: true }
 );
