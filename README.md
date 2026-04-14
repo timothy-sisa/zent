@@ -3,7 +3,7 @@
 
 **Authors:** Timothy Sisa (3142650) · Alazar Kidane (3136216) · Adarsh Pandit (3134329)
 **Module:** Web Technologies · Semester 2 · Griffith College Dublin
-**Deployed URL:** 
+**Deployed URL:** https://zent-m8ay.onrender.com
 
 ---
 
