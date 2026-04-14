@@ -17,10 +17,14 @@ const emailValidation = body("email")
   .isEmail().withMessage("Please enter a valid email address.")
   .normalizeEmail(); // Lowercases domain, removes dots in gmail etc.
 
-// Password rules for registration (stricter than login)
+// Strong password rules for registration
 const registerPasswordValidation = body("password")
   .notEmpty().withMessage("Password is required.")
-  .isLength({ min: 6 }).withMessage("Password must be at least 6 characters.");
+  .isLength({ min: 8 }).withMessage("Password must be at least 8 characters.")
+  .matches(/[A-Z]/).withMessage("Password must contain at least one uppercase letter.")
+  .matches(/[a-z]/).withMessage("Password must contain at least one lowercase letter.")
+  .matches(/[0-9]/).withMessage("Password must contain at least one number.")
+  .matches(/[!@#$%^&*(),.?":{}|<>]/).withMessage("Password must contain at least one special character.");
 
 // Routes 
 
