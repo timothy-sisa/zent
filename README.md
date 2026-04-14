@@ -97,8 +97,8 @@ zent/
 
 | Member | Contributions | % |
 |---|---|---|
-| Timothy Sisa (3142650) | server.js, session and cookie config, auth routes and controller, User model | 33% |
-| Alazar Kidane (3136216) | Resource model and controller, upload middleware, GridFS integration | 33% |
+| Timothy Sisa (3142650) | server.js, session and cookie config, auth routes and controller, User model, MongoDB connection | 33.5% |
+| Alazar Kidane (3136216) | Resource model and controller, upload middleware, GridFS integration, Render hosting | 33.5% |
 | Adarsh Pandit (3134329) | Comment model and controller, user routes, README, Render deployment, API testing | 33% |
 
 ---
