@@ -20,7 +20,14 @@ const {
   rateResource,
   toggleFavourite,
   getRecentlyViewed,
+  getFavourites,
+  removeFavourite,
 } = require("../controllers/resourceController");
+// GET /api/resources/favourites — get all favourite resources for the authenticated user
+router.get("/favourites", requireAuth, getFavourites);
+
+// DELETE /api/resources/:id/favourite — remove a resource from favourites
+router.delete("/:id/favourite", requireAuth, removeFavourite);
 
 const {
   addComment,

@@ -257,4 +257,36 @@ const getRecentlyViewed = async (req, res) => {
   }
 };
 
-module.exports = { createResource, getResources, getResourceById, updateResource, deleteResource, rateResource, toggleFavourite, getRecentlyViewed };
+// Get all favourite resources for the authenticated user
+const getFavourites = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).populate({
+      path: "favourites",
+      select: "title resourceType averageRating uploadedBy",
+      populate: { path: "uploadedBy", select: "username role" }
+    });
+    return res.status(200).json({ favourites: user.favourites });
+  } catch (err) {
+    console.error("getFavourites error:", err.message);
+    res.status(500).json({ error: "Server error while fetching favourites." });
+  }
+};
+
+// Remove a resource from the user's favourites
+const removeFavourite = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    const wasFavourited = user.favourites.includes(req.params.id);
+    if (!wasFavourited) {
+      return res.status(404).json({ error: "Resource not in favourites." });
+    }
+    user.favourites = user.favourites.filter((id) => id.toString() !== req.params.id);
+    await user.save();
+    return res.status(200).json({ message: "Removed from favourites." });
+  } catch (err) {
+    console.error("removeFavourite error:", err.message);
+    res.status(500).json({ error: "Server error while removing favourite." });
+  }
+};
+
+module.exports = { createResource, getResources, getResourceById, updateResource, deleteResource, rateResource, toggleFavourite, getRecentlyViewed, getFavourites, removeFavourite };
