@@ -4,6 +4,7 @@
 require("dotenv").config();
 
 const express = require("express");
+const cors = require("cors");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const MongoStore = require("connect-mongo");
@@ -18,6 +19,12 @@ const userRoutes = require("./routes/users");
 connectDB();
 
 const app = express();
+
+// Allow the frontend client to contact the API — origin set via CLIENT_URL env variable.
+app.use(cors({
+  origin: process.env.CLIENT_URL || "http://localhost:5173",
+  credentials: true,
+}));
 
 // Parse JSON and form bodies from incoming requests.
 app.use(express.json());
