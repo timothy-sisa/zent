@@ -20,6 +20,9 @@ connectDB();
 
 const app = express();
 
+// Trust the first proxy (Render's load balancer) so secure cookies can be set
+app.set("trust proxy", 1);
+
 // Allow the frontend client to contact the API — origin set via CLIENT_URL env variable.
 app.use(cors({
   origin: process.env.CLIENT_URL || "http://localhost:5173",
